@@ -152,7 +152,7 @@ const Dashboard = (props) => {
     };
 
     const handleUpdateSubmit = async () => {
-        let updatedData = await updatespend(credentials.username, formState);
+        let updatedData = await updatespend(formState._id, formState);
         if (updatedData.status === 200) {
             setSpend(spend.map(spendItem => spendItem._id === formState._id ? { ...formState } : spendItem));
             setIsUpdateModalVisible(false); // Close modal on successful update
