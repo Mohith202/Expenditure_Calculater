@@ -32,7 +32,7 @@ export const updateSpending = async (req, res) => {
     // let userid=ObjectId(`${id}`)
     console.log(String(userid))
     try{
-        const spending = await Spending.findByIdAndUpdate({_id:userid},{ categories, amount, date, description, user });
+        const spending = await Spending.findByIdAndUpdate({_id:userid},{ categories, amount, date, description});
         res.status(200).json({spend: spending, message: "ok"});
     } catch(error){
         res.status(500).json({error, message: "error"});

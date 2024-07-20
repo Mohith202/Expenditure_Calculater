@@ -1,0 +1,35 @@
+.add-new-button {
+    background-color: #000000E5;
+    color: white;
+    width: 96px;
+    border-radius: 20px;
+    padding: 6px, 17px, 7px, 17px;
+    font-size: 16px;
+    opacity: 0.9;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+}
+
+.add-new-button:hover {
+    background-color: #333;
+} 
+
+
+.custom-grid-table{
+    width:1300px;
+}
+
+.icon-container {
+    display: flex;
+    gap: 5px; /* Adjust the gap as needed */
+    margin-left: 10px;
+}
+
+.icon-container img {
+    cursor: pointer;
+    border: none;
+
+}

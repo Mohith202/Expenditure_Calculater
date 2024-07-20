@@ -1,0 +1,8 @@
+.todo-detail-buttons{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin:auto;
+    width: 50%;
+}
