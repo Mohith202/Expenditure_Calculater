@@ -1,31 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, TextField, Button, Content, Heading, Picker, Item } from '@adobe/react-spectrum';
 
 
 import "./modal.css"
 
-const ExpenseModal = ({ isOpen, onClose, onSubmit, formData, setFormData }) => {
+const ExpenseModal = ({ type, isOpen, onClose, onSubmit, formData, setFormData }) => {
     const handleChange = (name) => (value) => {
         setFormData({ ...formData, [name]: value });
     };
-
+    const [customCategory, setCustomCategory] = useState("");
+    const [isCustomCategory, setIsCustomCategory] = useState(false);
     const handleCategoryChange = (selected) => {
         if (selected === 'other') {
-            // Reset or prepare to input a custom category
-            <input type="text" />
-            handleChange('categories')('');
+            setIsCustomCategory(true);
+            setFormData({ ...formData, categories: '' }); // Reset category to empty when 'Other' is selected
         } else {
-            handleChange('categories')(selected);
+            setIsCustomCategory(false);
+            setFormData({ ...formData, categories: selected });
         }
     };
-
+    
     return (
         <Dialog
-            isOpen={isOpen}
-            onClose={onClose}
-            width="size-6000"
+        isOpen={isOpen}
+        onClose={onClose}
+        width="size-6000"
+        UNSAFE_className="modal"
         >
-            <Heading>Add New Expense</Heading>
+            <Heading>{type === "Add New" ? "Add New Expense" : "Update Expense"}</Heading>
             <Content>
                 <form onSubmit={(e) => {
                     e.preventDefault();
@@ -37,7 +39,7 @@ const ExpenseModal = ({ isOpen, onClose, onSubmit, formData, setFormData }) => {
                             { name: 'Travel', id: 'travel' },
                             { name: 'Food', id: 'food' },
                             { name: 'Supplies', id: 'supplies' },
-                            { name: 'Other', id: 'other' } // Added 'Other' option
+                            { name: 'Other', id: 'other' }
                         ]}
                         selectedKey={formData.categories}
                         onSelectionChange={selected => handleCategoryChange(selected)}
@@ -45,11 +47,11 @@ const ExpenseModal = ({ isOpen, onClose, onSubmit, formData, setFormData }) => {
                     >
                         {item => <Item key={item.id}>{item.name}</Item>}
                     </Picker>
-                    {formData.categories === 'other' && (
+                    {isCustomCategory && (
                         <TextField
                             label="Specify Category"
                             value={formData.categories}
-                            onChange={handleChange('categories')}
+                            onChange={ handleChange('categories')}
                             width="100%"
                         />
                     )}
@@ -74,6 +76,7 @@ const ExpenseModal = ({ isOpen, onClose, onSubmit, formData, setFormData }) => {
                         width="100%"
                     />
                     <Button variant="cta" type="submit" marginTop="size-400">Submit</Button>
+                    <Button variant="secondary" onPress={onClose} marginTop="size-400">Close</Button>
                 </form>
             </Content>
         </Dialog>

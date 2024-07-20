@@ -80,12 +80,12 @@ const Dashboard = (props) => {
     } else {
         const amountsByCategory = spend.reduce((acc, item) => {
             acc[item.categories] = (acc[item.categories] || 0) + parseInt(item.amount);
-            console.log(acc[item.categories],acc)
+            console.log(acc[item.categories], acc)
             return acc;
         }, {});
-    
+
         console.log(amountsByCategory)
-    if(chartData=={ }){
+        if (chartData == {}) {
             setChartData({
                 labels: Object.keys(amountsByCategory),
                 datasets: [{
@@ -96,7 +96,7 @@ const Dashboard = (props) => {
                     borderWidth: 1
                 }]
             });
-    
+
             setChartOptions({
                 scales: {
                     y: {
@@ -109,8 +109,9 @@ const Dashboard = (props) => {
                     }
                 }
             });
-    
-        }}
+
+        }
+    }
 
 
     console.log(spend); // Ensure data is being passed correctly
@@ -122,13 +123,15 @@ const Dashboard = (props) => {
 
     const handleEdit = (item) => {
         setFormState(item);
-        setIsUpdateModalVisible(false);
+        setIsUpdateModalVisible(true);
+        toast.info('Edit mode activated.'); // Toast notification for editing
     };
 
 
     const closeModal = () => {
         setSelectedTodo(null);
-        setIsUpdateModalVisible(True);
+        setIsUpdateModalVisible(false);
+        toast.info('Modal closed.'); // Toast notification for closing the modal
     };
 
     const handleAdd = async () => {
@@ -167,15 +170,28 @@ const Dashboard = (props) => {
         let deletedData = await deletespend(userid)
         if (deletedData.status === 200) {
             setSpend(spend.filter(item => item._id !== userid));
+            toast.success('Expense deleted successfully!'); // Toast on successful delete
+        } else {
+            toast.error('Failed to delete expense.'); // Toast on failure to delete
         }
     };
 
 
     return (
         <div>
-            {spend.length === 0 ? (
-                <p>Haven't spent anything yet. Click on the button below to add your first expense.</p>
-            ) : (
+            <div className="add-button-container" >
+                        <Button variant="cta" onPress={() => setIsModalOpen(true)}>Add New Expense</Button>
+                    </div>
+            {spend.length === 0 ? 
+                <div className="no-spend-container">
+                    <p className="no-spend-message" >Haven't spent anything yet. Click on the button below to add your first expense.
+                    </p>
+                    <h1>hicwhed;cewoijoiirjoil</h1>
+                    <div className="add-button-container" style={{ margin: "20px" }}>
+                        <Button variant="cta" onPress={() => setIsModalOpen(true)}>Add New Expense</Button>
+                    </div>
+                </div>
+             : (
                 <div>
                     <div className="right-container">
                         <h1 style={{ marginLeft: "10vh" }}>Summary:</h1>
@@ -209,10 +225,10 @@ const Dashboard = (props) => {
                                 </TableBody>
                             </TableView>
                         </div>
-                        <div style={{ justifyContent: "center", alignItems: "center", marginTop: "30px" }}>
+                        <div className="icon-button" style={{ justifyContent: "center", alignItems: "center", marginTop: "30px" }}>
                             {spend.map(item => (
                                 <Flex justifyContent="center" alignItems="center" margin="10px" key={item.userid} >
-                                    
+
                                     <ActionButton isQuiet onPress={() => handleUpdateClick(item)}>
                                         <img src={Edit} alt="Update" />
                                     </ActionButton>
@@ -221,8 +237,8 @@ const Dashboard = (props) => {
                                     </ActionButton>
                                 </Flex>
                             ))}
-                        </div>
-                            <div className="add-button-container" style={{ margin: "20px" }}>
+                        </div >
+                        <div className="add-button-container" style={{ margin: "20px" }}>
                             <Button variant="cta" onPress={() => setIsModalOpen(true)}>Add New Expense</Button>
                         </div>
 
@@ -230,22 +246,24 @@ const Dashboard = (props) => {
 
                 </div>
             )}
-         {
+            {
 
-             isModalOpen && (
-                 
-                 <ExpenseModal
-                 isOpen={isModalOpen}
-                 onClose={() => setIsModalOpen(false)}
-                 onSubmit={handleAdd}
-                 formData={formState}
-                 setFormData={setFormState}
-                 />
+                isModalOpen && (
+
+                    <ExpenseModal
+                        type="Add New"
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onSubmit={handleAdd}
+                        formData={formState}
+                        setFormData={setFormState}
+                    />
                 )
-            }  
+            }
 
             {isUpdateModalVisible && (
                 <ExpenseModal
+                    type="update"
                     isOpen={isUpdateModalVisible}
                     onClose={() => setIsUpdateModalVisible(false)}
                     onSubmit={handleUpdateSubmit}

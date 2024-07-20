@@ -1,0 +1,137 @@
+.Login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 10vh;
+
+    height: 50vh;
+    width: 40%;
+    background-color: rgba(255, 255, 255, 0.978);
+    border-radius: 20px;
+    position: inherit;
+    padding: 20px;
+}
+
+h2,
+.Login-title {
+    color: black;
+    text-align: left;
+    /* border:1px solid black; */
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    text-size-adjust: 20px;
+}
+
+.Login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    /* width: 100%; */
+}
+
+.input-div,
+.password-div {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+
+    width: 100%;
+    padding: 10px;
+    height: 50%;
+}
+
+.input-label,
+.password-label {
+    text-align: left;
+    font-size: larger;
+    padding-bottom: 10px
+}
+
+.username-input,
+.password-input {
+    width: 100%;
+    height: 30px;
+    border-bottom: 5px solid black;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.Login-button {
+    width: 10vmin;
+    font-size: large;
+    margin-top: 10px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid black;
+    background-color: rgb(25 63 193 / 55%);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.Login-button:hover {
+    background-color: rgb(25 63 193 / 55%);
+    color: white;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    transition: 0.3s;
+    transform: scale(1.05);
+}
+
+.error-message {
+    color: red;
+    font-size: 10px;
+    margin: 10px;
+    width: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    text-align: center;
+    margin-top: 10vh;
+    text-size-adjust: 15px;
+    font-size: 15px;
+
+}
+
+.spinner-div {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    z-index: 10;
+    border-top: 10px solid blue;
+    /* background-color: blue; */
+    animation: rotate 1s ease-in-out infinite;
+    border-radius: 50%;
+}
+
+.spinner {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:auto;
+    /* z-index: 1000; */
+    background-color: white;
+    /* animation: spin 1s  infinite;000 */
+    border-radius: 50%;
+    z-index: 20;
+}
+@keyframes rotate{
+    0%{
+        transform: rotate(0deg);
+    }
+   
+    100%{
+        transform: rotate(360deg);
+    }

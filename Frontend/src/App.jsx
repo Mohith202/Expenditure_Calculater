@@ -11,26 +11,28 @@ import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider, defaultTheme } from '@adobe/react-spectrum';
 
+import "./App.css"
+
 function App() {
 	const [credentials, setCredentials] = useState({ username: "", password: "" });
 
   return (
    
+            <Provider theme={defaultTheme}>
       <div style={{backgroundColor:"rgb(25 63 193 / 55%",height:"100vh"}} >
        <h1 style={{textAlign:"center",color:"white"}}>Expense Tracker</h1>
        <div className='container'>
           <Router>
-            <Provider theme={defaultTheme}>
               <Routes>
                 <Route path="/" element={<Login credentials={credentials} setCredentials={setCredentials} />} />
                 <Route path="/dashboard" element={<Dashboard credentials={credentials} setCredentials={setCredentials} />} />
                 <Route path="/signup" element={<Signup credentials={credentials} setCredentials={setCredentials} />} />
               </Routes>
-            </Provider>
           </Router>
           <ToastContainer />
        </div>
       </div>
+            </Provider>
  
   )
 }

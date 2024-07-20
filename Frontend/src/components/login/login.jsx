@@ -3,10 +3,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 
+import "./login.css"
+
+
 const LogIn = (props) => {
 	
 	const [errorMessage, setErrorMessage] = useState("");
-	// const [loggedIn, setIsLoggedIn] = useState(false);
+	const [spinnersate, setSpinnersate] = useState(false);
 	const navigate = useNavigate();
 
 
@@ -21,6 +24,7 @@ const LogIn = (props) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setSpinnersate(true);
 		console.log(props.credentials)
 		try {
 			console.log("try", JSON.stringify(props.credentials))
@@ -43,25 +47,27 @@ const LogIn = (props) => {
 				//   fetchedData = data;
 				//   toast.success('Data fetched successfully!');
 				// setIsLoggedIn(true);
-			}
-		} catch (error) {
-			if (error.response && error.response.status === 401) {
+			}else{
 				setErrorMessage("Credentials input incorrect, please try again");
-			} else {
-				setErrorMessage("An error occurred. Please try again later.");
 			}
+			setSpinnersate(false);
+		} catch (error) {
+				setSpinnersate(false);
+				setErrorMessage("Credentials input incorrect, please try again");
+			}
+			
 		}
-	};
+	
 
 
 	return (
-		<div className="Login-container" style={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: "white", width: "40vw", margin: "auto", height: "40vh" }} >
-			<h2 className="Login-title" style={{ marginBottom: "5vh", fontSize: "6vmin", }}>
+		<div className="Login-container" >
+			<h2 className="Login-title">
 				Login
 			</h2>
 			<form className="Login-form" onSubmit={handleSubmit}>
-				<div className="input-div" style={{ marginBottom: "2vmin" }} >
-					<label htmlFor="email" className="input-label" style={{ fontSize: "2vmin", fontWeight: "400", padding: "10px" }} >
+				<div className="input-div" >
+					<label htmlFor="email" className="input-label" >
 						Username
 					</label>
 					<input
@@ -72,11 +78,11 @@ const LogIn = (props) => {
 						placeholder="Username"
 						value={props.credentials.username}
 						onChange={handleChangeusername}
-						style={{ fontSize: "2vmin", fontWeight: "400", border: "none", borderBottom: "1px solid white", outline: "none", padding: "10px" }}
+						
 					/>
 				</div>
-				<div className="password-div" style={{ marginBottom: "2vmin" }}>
-					<label htmlFor="password" className="password-label" style={{ fontSize: "2vmin", fontWeight: "400", padding: "10px" }} >
+				<div className="password-div" >
+					<label htmlFor="password" className="password-label"  >
 						Password
 					</label>
 					<input
@@ -87,24 +93,30 @@ const LogIn = (props) => {
 						placeholder="Password"
 						value={props.credentials.password}
 						onChange={handleChangepassword}
-						style={{ fontSize: "2vmin", fontWeight: "400", border: "none", borderBottom: "1px solid white", outline: "none", padding: "10px" }}
+						
 					/>
 				</div>
-				<div className="button-div" style={{ margin: "auto", width: "1vw" }}>
+				<div className="button-div" >
 
 					<button
 						type="submit"
 						className="Login-button"
-						style={{ border: "none", background: "transparent", fontSize: "2vmin", fontWeight: "400", padding: "10px", border: "1px solid white", borderRadius: "20px", cursor: "pointer" }}
+						
 					>
 						Login
 					</button>
+					{spinnersate && (
+						<div className="spinner-div" >
+							<div className="spinner" >
+							</div>
+						</div>
+					)}
 				</div>
 				{errorMessage && (
 					<p className="error-message">{errorMessage}</p>
 				)}
 			</form>
-			<p className="link">Don't have an account? <Link to="/signup">Signup</Link></p>
+			<p className="link">Don't have an account? <Link className="link" to="/signup">Signup</Link></p>
 		</div>
 
 	);

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate,Link } from "react-router-dom";
 
 
+import "./signup.css";
+
 const Signup = (props) => {
 	const [errorMessage, setErrorMessage] = useState("");
 	const navigate = useNavigate();
@@ -47,7 +49,7 @@ const Signup = (props) => {
 						<h2 className="signup-title">
 							Signup
 						</h2>
-						<form className="singup-form" onSubmit={handleSubmit}>
+						<form className="signup-form" onSubmit={handleSubmit}>
 							<div className="input-div">
 								<label htmlFor="email" className="input-label">
 									Username 
@@ -89,7 +91,7 @@ const Signup = (props) => {
 								<p className="error-essage">{errorMessage}</p>
 							)}
 						</form>
-                        <p className="link">Already have an account? <Link to="/">Login</Link></p>
+                        <p className="link">Already have an account? <Link className="link" to="/">Login</Link></p>
 				
 			</div>
 	);
