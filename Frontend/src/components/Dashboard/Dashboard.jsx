@@ -26,17 +26,26 @@ const Dashboard = (props) => {
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('All'); // State to hold the selected category
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
 
         const storedData = JSON.parse(sessionStorage.getItem('dashboardData'));
         const storedCredentials = JSON.parse(sessionStorage.getItem('credentials'));
         console.log(storedData, storedCredentials)
+
         if (spend.length === 0 && storedData && storedCredentials) {
             setSpend(storedData.spend || []);
             setCredentials(storedCredentials);
         }
-        if (storedData.spend.length == 0) {
+
+        else if (spend.length === 0 && storedData && storedCredentials) {
+            setSpend(storedData.spend || []);
+            setCredentials(storedCredentials);
+        }
+        if (storedData.spend.length == 0 && spend.length > 0) {
             sessionStorage.removeItem('dashboardData');
             sessionStorage.setItem('dashboardData', JSON.stringify({ spend: spend }));
         }
@@ -160,6 +169,7 @@ const Dashboard = (props) => {
     }
 
     const handleAdd = async () => {
+
         const newSpend = { ...formState };
         console.log("added")
         let createdData = await createspend(credentials.username, newSpend);
@@ -172,9 +182,27 @@ const Dashboard = (props) => {
             toast.error('Failed to add expense.');
         }
     };
+    const handleDateRangeSubmit = async () => {
+        setIsLoading(true);
+        const data = {
+            startDate:startDate,
+            endDate:endDate
+        };
+        let dataDaterange=await fetchspendbydate(credentials.username,data)
+        if(dataDaterange.status===200){
+            setSpend(dataDaterange.data)
+            toast.success('Data fetched successfully!');
+        }
+        else{
+            toast.error('Failed to fetch data.');
+        }
+        setIsLoading(false);
+        
 
+    };
 
     const handleUpdateClick = (item) => {
+        window.scrollTo(0, 0);
         setFormState(item);
         setIsUpdateModalVisible(true); // Show the modal when update is clicked
     };
@@ -231,13 +259,37 @@ const Dashboard = (props) => {
                     <div className="left-container-inner">
 
                         <h1>Detailed view:</h1>
-                        <select className="category-select" value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)} >
-                            <option value="All">All Categories</option>
 
-                            {[...new Set(spend.map(item => item.categories))].map(category => (
-                                <option key={category} value={category}>{category}</option>
-                            ))}
-                        </select>
+                        <div className="filter-container">
+                            <select className="category-select" value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)} >
+                                <option value="All">All Categories</option>
+
+                                {[...new Set(spend.map(item => item.categories))].map(category => (
+                                    <option key={category} value={category}>{category}</option>
+                                ))}
+                            </select>
+                            {/* <div className="date-range-selector"> */}
+                            <div>
+                                <label htmlFor="startDate" style={{ color: "white" }} >Start Date</label>
+                                <input
+                                    className="date-range-selector"
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="endDate" style={{ color: "white" }} >End Date</label>
+                                <input
+                                    className="date-range-selector"
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
+                            <button onClick={handleDateRangeSubmit}>Submit Date Range</button>
+                            {/* </div> */}
+                        </div>
 
                         <TableView aria-label="Airports Table" UNSAFE_className="custom-grid-table"  >
                             <TableHeader>
@@ -286,13 +338,13 @@ const Dashboard = (props) => {
                                     <td>{item.date}</td>
                                     <td>
 
-                                    <ActionButton isQuiet onPress={() => handleUpdateClick(item)}>
-                                        <img src={Edit} alt="Update" />
-                                    </ActionButton>
+                                        <ActionButton isQuiet onPress={() => handleUpdateClick(item)}>
+                                            <img src={Edit} alt="Update" />
+                                        </ActionButton>
 
-                                    <ActionButton isQuiet onPress={() => handleDelete(item._id)}>
-                                        <img src={Delete} alt="Delete" />
-                                    </ActionButton>
+                                        <ActionButton isQuiet onPress={() => handleDelete(item._id)}>
+                                            <img src={Delete} alt="Delete" />
+                                        </ActionButton>
                                     </td>
                                 </tr>
                             ))}

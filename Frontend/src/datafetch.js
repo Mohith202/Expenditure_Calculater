@@ -3,7 +3,14 @@
 const API_URL = 'https://expenditure-calculater.onrender.com/api/users'; // Replace with your actual backend URL
 
 export async function fetchspendbydate(username,date) {
-    const response = await fetch(`${API_URL}//Spending/get/bydate/${username}`);
+   console.log(date)
+    const response = await fetch(`${API_URL}//Spending/get/bydate/${username}`,{
+        method:'GET',
+        headers:{
+            'Content-Type':'applcation/json',
+            },
+            body:JSON.stringify({fromdate:date.startDate,toDate:date.endDate})
+    });
     if (!response.ok) {
         alert('Server Down. Please try again later');
     }

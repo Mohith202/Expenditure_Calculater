@@ -10,7 +10,7 @@ router.post('/login/', Userlogin);
 router.post('/Signup', Usersignup);
 router.post('/spending/create/:id', createSpending);
 router.get('/Spending/get/:id', getAllSpending);
-router.get('/Spending/get/bydate/:id', spendingbyDay);
+router.post('/Spending/get/bydate/:id', spendingbyDay);
 router.put('/Spending/update/:id', updateSpending);
 router.delete('/Spending/delete/:id', deleteSpending);
 

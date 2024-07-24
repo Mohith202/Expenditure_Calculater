@@ -1,6 +1,6 @@
 .modal{
-    width: 50%;
-    height: 68%;
+    width: 50vw;
+    height: 68vh;
     margin: auto;
     border: 1px solid #000;
     border-radius: 10px;

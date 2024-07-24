@@ -32,7 +32,7 @@ function App() {
           <ToastContainer />
        </div>
       </div>
-            </Provider>
+       </Provider>
  
   )
 }
