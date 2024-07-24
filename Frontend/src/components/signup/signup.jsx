@@ -35,6 +35,7 @@ const Signup = (props) => {
               if (response.status==200) {
 				navigate("/Dashboard");
 			}
+			setErrorMessage("User already exists.")
 		} catch (error) {
 			
 				setErrorMessage("An error occurred. Please try again later.");
@@ -44,7 +45,8 @@ const Signup = (props) => {
 
 
 	return (
-		<div className="Signup-container">
+		<>
+				<div className="Signup-container">
 					
 						<h2 className="signup-title">
 							Signup
@@ -62,6 +64,7 @@ const Signup = (props) => {
 									placeholder="Username "
 									value={props.credentials.username}
 									onChange={handleChangeusername }
+									required
 								/>
 							</div>
 							<div className="password-div">
@@ -76,6 +79,7 @@ const Signup = (props) => {
 									placeholder="Password"
 									value={props.credentials.password}
 									onChange={handleChangepassword}
+									required
 								/>
 							</div>
 							<div className="button-div ">
@@ -88,12 +92,13 @@ const Signup = (props) => {
 								</button>
 							</div>
 							{errorMessage && (
-								<p className="error-essage">{errorMessage}</p>
+								<p className="error-message">{errorMessage}</p>
 							)}
 						</form>
-                        <p className="link">Already have an account? <Link className="link" to="/">Login</Link></p>
 				
 			</div>
+                        <p className="link">Already have an account? <Link className="link" to="/">Login</Link></p>
+	</>
 	);
 }
 export default Signup;

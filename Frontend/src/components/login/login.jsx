@@ -61,6 +61,7 @@ const LogIn = (props) => {
 
 
 	return (
+		<>
 		<div className="Login-container" >
 			<h2 className="Login-title">
 				Login
@@ -78,7 +79,7 @@ const LogIn = (props) => {
 						placeholder="Username"
 						value={props.credentials.username}
 						onChange={handleChangeusername}
-						
+						required
 					/>
 				</div>
 				<div className="password-div" >
@@ -93,7 +94,7 @@ const LogIn = (props) => {
 						placeholder="Password"
 						value={props.credentials.password}
 						onChange={handleChangepassword}
-						
+						required
 					/>
 				</div>
 				<div className="button-div" >
@@ -116,9 +117,9 @@ const LogIn = (props) => {
 					<p className="error-message">{errorMessage}</p>
 				)}
 			</form>
-			<p className="link">Don't have an account? <Link className="link" to="/signup">Signup</Link></p>
 		</div>
-
+			<p className="link">Don't have an account? <Link className="link" to="/signup">Signup</Link></p>
+				</>
 	);
 };
 

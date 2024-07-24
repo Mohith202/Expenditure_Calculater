@@ -6,7 +6,7 @@ import './App.css'
 
 import Login from './components/login/login';
 import Signup from './components/signup/signup';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard/Dashboard';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider, defaultTheme } from '@adobe/react-spectrum';
@@ -19,7 +19,7 @@ function App() {
   return (
    
             <Provider theme={defaultTheme}>
-      <div style={{backgroundColor:"rgb(25 63 193 / 55%",height:"100vh"}} >
+      <div style={{backgroundColor:"#000",height:"100vh"}} >
        <h1 style={{textAlign:"center",color:"white"}}>Expense Tracker</h1>
        <div className='container'>
           <Router>
