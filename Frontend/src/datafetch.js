@@ -1,7 +1,7 @@
 // Frontend/src/datafetch.js
 
-// const API_URL = 'https://expenditure-calculater.onrender.com/api/users'; // Replace with your actual backend URL
-const API_URL = 'http://localhost:5000/api/users'; // Replace with your actual backend URL
+const API_URL = 'https://expenditure-calculater.onrender.com/api/users'; // Replace with your actual backend URL
+// const API_URL = 'http://localhost:5000/api/users'; // Replace with your actual backend URL
 
 export async function fetchspendbydate(username,date) {
    console.log(date,username)

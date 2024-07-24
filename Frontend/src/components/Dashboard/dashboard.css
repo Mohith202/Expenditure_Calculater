@@ -4,7 +4,23 @@
     /* margin-top: 20px; */
 }
 
+.spinner-container{
+    z-index: 10100;
+    display: block;
+    width:100vw;
+    height: 100vh;
+    background-color: rgba(52, 46, 46, 0.555);
+}
 
+.spinner{
+    margin: auto;
+    margin-top: 200px;
+    z-index: 10100;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .no-spend-container{
     display: flex;
     flex-direction: column;
@@ -67,9 +83,16 @@ h1{
 }
 .filter-container{
     display: flex;
+    flex-direction: column;
+    justify-content:start;
+    align-items: flex-start;
+}
+.date-range-container{
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .category-select{
@@ -168,5 +191,26 @@ h5{
         font-size: 2vmin;
         background-color: transparent;
     }
+    .filter-container{
+        flex-direction: column !important;
 
+    }
+    .date-range-container{
+        display: flex;
+        flex-direction: row;
+        margin: 0px;
+        width:100%;
+        /* border:5px solid yellow; */
+        align-items: center;
+        justify-content: space-around;
+    }
+    .date-range-container input{
+        font-size: 10px;
+        width: 100%;
+        margin: 10px 0px;
+        padding:0px
+    }
+    .date-range-container>button{
+        font-size: 10px;
+    }
 }

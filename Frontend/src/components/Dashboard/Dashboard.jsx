@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TableView, TableHeader, TableBody, Column, Row, Cell, Flex, ActionButton, Button } from '@adobe/react-spectrum';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, Colors } from 'chart.js';
-
+import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import Edit from "../../assets/Edit.png";
 import Delete from "../../assets/Delete.png";
@@ -165,7 +165,7 @@ const Dashboard = (props) => {
     }
 
     const handleAdd = async () => {
-
+        setIsLoading(true);
         const newSpend = { ...formState };
         console.log("added")
         let createdData = await createspend(credentials.username, newSpend);
@@ -178,6 +178,7 @@ const Dashboard = (props) => {
         } else {
             toast.error('Failed to add expense.');
         }
+        setIsLoading(false);
     };
     const handleDateRangeSubmit = async () => {
         if (startDate === "" || endDate === "") {
@@ -207,6 +208,7 @@ const Dashboard = (props) => {
     };
 
     const handleUpdateSubmit = async () => {
+        setIsLoading(true);
         let updatedData = await updatespend(formState._id, formState);
         if (updatedData.status === 200) {
             setSpend(spend.map(spendItem => spendItem._id === formState._id ? { ...formState } : spendItem));
@@ -215,9 +217,11 @@ const Dashboard = (props) => {
         } else {
             toast.error('Failed to update expense.');
         }
+        setIsLoading(false);
     };
 
     const handleDelete = async (userid) => {
+        setIsLoading(true);
         console.log("deleting", userid)
         let deletedData = await deletespend(userid)
         if (deletedData.status === 200) {
@@ -226,6 +230,7 @@ const Dashboard = (props) => {
         } else {
             toast.error('Failed to delete expense.'); // Toast on failure to delete
         }
+        setIsLoading(false);
     };
 
     // Dropdown change handler
@@ -238,6 +243,10 @@ const Dashboard = (props) => {
 
     return (
         <div >
+            {isLoading && 
+            <div className="spinner-container">
+                <ClipLoader  className="spinner" color="black" borderWidth={10} size={150} />
+            </div>}
             <div className="add-button-container" >
                 <div className="add-button-container" style={{ margin: "20px" }}>
                     <Button variant="cta" onPress={() => setIsModalOpen(true)}>Add New Expense</Button>
@@ -267,9 +276,9 @@ const Dashboard = (props) => {
                                     <option key={category} value={category}>{category}</option>
                                 ))}
                             </select>
-                            {/* <div className="date-range-selector"> */}
+                            <div className="date-range-container" >
                             <div>
-                                <label htmlFor="startDate" style={{ color: "white" }} >Start Date</label>
+                                <label htmlFor="startDate" style={{ color: "white" }} >Start Date:</label>
                                 <input
                                     className="date-range-selector"
                                     type="date"
@@ -278,7 +287,7 @@ const Dashboard = (props) => {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="endDate" style={{ color: "white" }} >End Date</label>
+                                <label htmlFor="endDate" style={{ color: "white" }} >End Date:</label>
                                 <input
                                     className="date-range-selector"
                                     type="date"
@@ -287,7 +296,7 @@ const Dashboard = (props) => {
                                 />
                             </div>
                             <button onClick={handleDateRangeSubmit}>Submit Date Range</button>
-                            {/* </div> */}
+                            </div>
                         </div>
 
                         <TableView aria-label="Airports Table" UNSAFE_className="custom-grid-table"  >
