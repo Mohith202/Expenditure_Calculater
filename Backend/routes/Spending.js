@@ -60,11 +60,13 @@ export const spendingbyDay=async(req,res)=>{
     const user=req.params.id
     const {fromdate, todate}=req.body
     try{
-        // Ensure dates are parsed correctly
+        // Increment todate by one day to include the entire day
+        const toDatePlusOne = new Date(new Date(todate).getTime() + (24 * 60 * 60 * 1000)).toISOString().split('T')[0];
+
         const spending=await Spending.find({
             date: {
-                $gte: new Date(fromdate + "T00:00:00Z"), // Start of the day in UTC
-                $lt: new Date(todate + "T00:00:00Z") // Start of the next day in UTC
+                $gte: fromdate, // Include from start of fromdate
+                $lt: toDatePlusOne // Include until the end of todate
             },
             user
         });
