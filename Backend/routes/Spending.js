@@ -61,8 +61,10 @@ export const spendingbyDay=async(req,res)=>{
     const {fromdate,todate}=req.body
     try{
         const spending=await Spending.findAll({date:{$gte:new Date(fromdate),$lt:new Date(todate)},user});
+       console.log(spending)
         res.status(200).json({spending,message:"Spending fetched successfully"});
     }catch(error){
+        console.log(error)
         res.status(500).send(error);
     }
 }
