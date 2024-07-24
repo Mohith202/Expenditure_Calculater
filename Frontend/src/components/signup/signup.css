@@ -90,7 +90,7 @@ h2{
 @media screen and (min-width:100px) and (max-width: 500px) {
     .Login-container,.Signup-container {
         width: 50%;
-        height:55vh;
+        height:22rem;
     }
     .Login-title,.signup-title{
         font-size: 20px;
