@@ -58,7 +58,7 @@ const Dashboard = (props) => {
                 return acc;
             }, {});
 
-            console.log("Amounts by Category:", amountsByCategory); // Debugging output
+            
 
             const newChartData = {
                 labels: Object.keys(amountsByCategory),
@@ -107,10 +107,6 @@ const Dashboard = (props) => {
                 }
             };
 
-            console.log("New Chart Data:", newChartData); // Debugging output
-            console.log("New Chart Options:", newChartOptions); // Debugging output
-            // Chart.defaults.color = '#FFFFFF';
-
             setChartData(newChartData);
             setChartOptions(newChartOptions);
         } else {
@@ -135,11 +131,11 @@ const Dashboard = (props) => {
     } else {
         const amountsByCategory = spend.reduce((acc, item) => {
             acc[item.categories] = (acc[item.categories] || 0) + parseInt(item.amount);
-            console.log(acc[item.categories], acc)
+
             return acc;
         }, {});
 
-        console.log(amountsByCategory)
+
         if (chartData == {}) {
             setChartData({
                 labels: Object.keys(amountsByCategory),
@@ -173,6 +169,7 @@ const Dashboard = (props) => {
         const newSpend = { ...formState };
         console.log("added")
         let createdData = await createspend(credentials.username, newSpend);
+
         if (createdData.status === 200) {
             setSpend([...spend, newSpend]);
             setFormState({ categories: '', amount: '', description: '', date: '' });
@@ -183,21 +180,23 @@ const Dashboard = (props) => {
         }
     };
     const handleDateRangeSubmit = async () => {
+        if (startDate === "" || endDate === "") {
+            toast.error('Please select a date range');
+            return;
+        }
         setIsLoading(true);
         const data = {
-            startDate:startDate,
-            endDate:endDate
+            fromdate: startDate,
+            todate: endDate
         };
-        let dataDaterange=await fetchspendbydate(credentials.username,data)
-        if(dataDaterange.status===200){
-            setSpend(dataDaterange.data)
-            toast.success('Data fetched successfully!');
-        }
-        else{
-            toast.error('Failed to fetch data.');
-        }
+        let dataDaterange = await fetchspendbydate(credentials.username, data)
+        console.log(dataDaterange)
+        setSpend(dataDaterange.spending)
+
+        toast.success('Data fetched successfully!');
+
         setIsLoading(false);
-        
+
 
     };
 

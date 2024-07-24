@@ -1,15 +1,15 @@
 // Frontend/src/datafetch.js
 
-const API_URL = 'https://expenditure-calculater.onrender.com/api/users'; // Replace with your actual backend URL
+// const API_URL = 'https://expenditure-calculater.onrender.com/api/users'; // Replace with your actual backend URL
+const API_URL = 'http://localhost:5000/api/users'; // Replace with your actual backend URL
 
 export async function fetchspendbydate(username,date) {
-   console.log(date)
+   console.log(date,username)
+   console.log(JSON.stringify(date))
     const response = await fetch(`${API_URL}/Spending/get/bydate/${username}`,{
         method:'POST',
-        headers:{
-            'Content-Type':'applcation/json',
-            },
-            body:JSON.stringify({fromdate:date.startDate,todate:date.endDate})
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(date)
     });
     if (!response.ok) {
         alert('Server Down. Please try again later');

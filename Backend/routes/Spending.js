@@ -59,6 +59,7 @@ export const deleteSpending = async (req, res) => {
 export const spendingbyDay=async(req,res)=>{
     const user=req.params.id
     const {fromdate, todate}=req.body
+    console.log(fromdate,todate)
     try{
         // Increment todate by one day to include the entire day
         const toDatePlusOne = new Date(new Date(todate).getTime() + (24 * 60 * 60 * 1000)).toISOString().split('T')[0];
