@@ -58,11 +58,18 @@ export const deleteSpending = async (req, res) => {
 
 export const spendingbyDay=async(req,res)=>{
     const user=req.params.id
-    const {fromdate,todate}=req.body
+    const {fromdate, todate}=req.body
     try{
-        const spending=await Spending.findAll({date:{$gte:new Date(fromdate),$lt:new Date(todate)},user});
-       console.log(spending)
-        res.status(200).json({spending,message:"Spending fetched successfully"});
+        // Ensure dates are parsed correctly
+        const spending=await Spending.find({
+            date: {
+                $gte: new Date(fromdate + "T00:00:00Z"), // Start of the day in UTC
+                $lt: new Date(todate + "T00:00:00Z") // Start of the next day in UTC
+            },
+            user
+        });
+        console.log(spending)
+        res.status(200).json({spending, message:"Spending fetched successfully"});
     }catch(error){
         console.log(error)
         res.status(500).send(error);

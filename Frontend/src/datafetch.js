@@ -4,12 +4,12 @@ const API_URL = 'https://expenditure-calculater.onrender.com/api/users'; // Repl
 
 export async function fetchspendbydate(username,date) {
    console.log(date)
-    const response = await fetch(`${API_URL}//Spending/get/bydate/${username}`,{
+    const response = await fetch(`${API_URL}/Spending/get/bydate/${username}`,{
         method:'POST',
         headers:{
             'Content-Type':'applcation/json',
             },
-            body:JSON.stringify({fromdate:date.startDate,toDate:date.endDate})
+            body:JSON.stringify({fromdate:date.startDate,todate:date.endDate})
     });
     if (!response.ok) {
         alert('Server Down. Please try again later');
